@@ -18,5 +18,5 @@ http://localhost:5000/freqUser
 ```
 This will hit the freqUser endpoint that queries the frequent_browser database table. It will return the result in the following format:
 ```bash
-FirstName|PersonID|Count(Visits)
+PersonID|FirstName|LastName|Count(Visits)
 ```

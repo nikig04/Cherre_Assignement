@@ -17,6 +17,8 @@ def sql_connection():
         db_path = os.path.join(BASE_DIR + "/sqlite/testdb.db")
         con = sqlite3.connect(db_path)
         print("Connection is established: Database is created in memory")
+        cur= con.cursor()
+        create_table(cur)
         return con
 
     except Error:
@@ -29,9 +31,9 @@ def sql_connection():
 """
 def create_table(cur):
 
-    cur.execute('CREATE TABLE IF NOT EXISTS frequent_browser AS select people.first_name, people.id, '
-                'Count(people.first_name) from visits LEFT JOIN  people on visits.personId = people.id '
-                'GROUP BY people.first_name ORDER BY Count(people.first_name) '
+    cur.execute('CREATE TABLE IF NOT EXISTS frequent_browser AS select people.id, people.first_name,people.last_name, '
+                'Count(people.id) from visits LEFT JOIN  people on visits.personId = people.id '
+                'GROUP BY people.id ORDER BY Count(people.id) '
                 'DESC LIMIT 10;')
     print("Table Created")
 
@@ -57,7 +59,7 @@ def create_project(cur):
     result = all_rows
     return result
 
-
+sql_connection()
 if __name__ == '__main__':
 
     app.run(debug=True)
